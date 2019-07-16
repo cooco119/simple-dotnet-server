@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using simple_dotnet_server.DbManager;
 
 namespace simple_dotnet_server.Controllers
 {
@@ -24,6 +25,12 @@ namespace simple_dotnet_server.Controllers
                 TemperatureC = rng.Next(-20, 55),
                 Summary = Summaries[rng.Next(Summaries.Length)]
             });
+        }
+
+        [HttpPost("[action]")]
+        public bool WriteOnDatabase([FromBody] string data)
+        {
+            return MyDbManager.GetInstance().WriteOnCollection(data);
         }
 
         public class WeatherForecast
